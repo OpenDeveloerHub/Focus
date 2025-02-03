@@ -10,6 +10,8 @@ exports.addFocusSession = async (req, res) => {
 
         const focusSegment = new FocusSegment({ startTime, endTime, duration, projectName });
 
+        await focusSegment.save();
+
         const date = new Date(startTime).toISOString().split('T')[0];
         let dailyFocus = await DailyFocus.findOne({ userId, date });
 
@@ -19,9 +21,10 @@ exports.addFocusSession = async (req, res) => {
 
         dailyFocus.totalFocusMinutes += duration;
         dailyFocus.projectTimeMap.set(projectName, (dailyFocus.projectTimeMap.get(projectName) || 0) + duration);
-        dailyFocus.focusSegments.push(focusSegment);
+        dailyFocus.focusSegments.push(focusSegment._id);
 
         await dailyFocus.save();
+
         res.status(201).json({ message: 'Focus session added successfully', dailyFocus });
     } catch (error) {
         res.status(500).json({ error: error.message });

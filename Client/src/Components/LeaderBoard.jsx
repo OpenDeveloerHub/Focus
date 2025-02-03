@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaTrophy } from "react-icons/fa";
 import { motion } from "framer-motion";
+import axios from "axios";
 
 const Leaderboard = () => {
-  const users = [
-    { id: 1, name: "Alice", studyTime: 10 },
-    { id: 2, name: "Bob", studyTime: 15 },
-    { id: 3, name: "Charlie", studyTime: 12 },
-    { id: 4, name: "David", studyTime: 8 },
-    { id: 5, name: "Eve", studyTime: 20 },
-  ];
+  const [leaderboardData, setLeaderboardData] = useState([]);
 
-  const sortedUsers = [...users].sort((a, b) => b.studyTime - a.studyTime);
+  useEffect(() => {
+    // Fetch leaderboard data from the backend API
+    axios
+      .get("http://localhost:5000/api/leaderboard/weekly")
+      .then((response) => {
+        // Set the leaderboard data state
+        setLeaderboardData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching leaderboard data:", error);
+      });
+  }, []);
 
   const getTrophy = (rank) => {
     if (rank === 1) return <FaTrophy className="text-yellow-400 text-2xl" />;
@@ -22,7 +28,7 @@ const Leaderboard = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 via-gray-900 to-black text-white p-10">
-      <motion.div 
+      <motion.div
         className="w-full max-w-5xl bg-gray-700/80 p-8 rounded-xl shadow-2xl"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -38,26 +44,26 @@ const Leaderboard = () => {
             <thead>
               <tr className="bg-gray-700 text-white">
                 <th className="px-6 py-3 text-left">Rank</th>
-                <th className="px-6 py-3 text-left">Name</th>
-                <th className="px-6 py-3 text-left">Study Time (hrs)</th>
+                <th className="px-6 py-3 text-left">Username</th>
+                <th className="px-6 py-3 text-left">Total Focus Minutes</th>
               </tr>
             </thead>
             <tbody className="text-gray-300">
-              {sortedUsers.map((user, index) => (
+              {leaderboardData.map((user, index) => (
                 <motion.tr
-                  key={user.id}
+                  key={user.userId}
                   className={`hover:bg-gray-600/80 transition-colors duration-300 ${
                     index % 2 === 0 ? "bg-gray-700" : "bg-gray-800"
                   }`}
                   whileHover={{ scale: 1.02 }}
                 >
                   <td className="px-6 py-4 flex items-center gap-3 font-semibold text-xl">
-                    {getTrophy(index + 1)}
-                    {index + 1}
+                    {getTrophy(user.rank)}
+                    {user.rank}
                   </td>
-                  <td className="px-6 py-4">{user.name}</td>
+                  <td className="px-6 py-4">{user.username}</td>
                   <td className="px-6 py-4 font-bold text-blue-400">
-                    {user.studyTime} hrs
+                    {user.totalFocusMinutes.toFixed(2)} mins
                   </td>
                 </motion.tr>
               ))}
