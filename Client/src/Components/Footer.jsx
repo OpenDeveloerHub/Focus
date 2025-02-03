@@ -3,7 +3,7 @@ import { FaGithub, FaTwitter, FaLinkedin, FaFacebook } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-700 text-white py-12">
+    <footer className="bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 text-white py-12">
       <div className="max-w-7xl mx-auto px-6">
         {/* Footer Content */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
@@ -11,7 +11,7 @@ const Footer = () => {
           {/* About Section */}
           <div>
             <h3 className="text-xl font-semibold mb-4">About Us</h3>
-            <p className="text-sm">
+            <p className="text-sm text-gray-200">
               FocusFlow is your go-to platform for enhancing productivity and focus. We provide tools to help you stay on track and accomplish your goals with ease.
             </p>
           </div>
@@ -38,8 +38,8 @@ const Footer = () => {
           {/* Contact Section */}
           <div>
             <h3 className="text-xl font-semibold mb-4">Contact</h3>
-            <p className="text-sm">Email: support@focusflow.com</p>
-            <p className="text-sm">Phone: +1 234 567 890</p>
+            <p className="text-sm text-gray-200">Email: support@focusflow.com</p>
+            <p className="text-sm text-gray-200">Phone: +1 234 567 890</p>
           </div>
 
           {/* Social Media Section */}

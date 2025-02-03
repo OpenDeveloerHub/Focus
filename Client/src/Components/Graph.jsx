@@ -124,7 +124,7 @@ const Graph = () => {
   };
 
   return (
-    <div className="p-6 bg-gradient-to-br from-gray-600 via-gray-700 to-gray-900 text-white shadow-lg">
+    <div className="p-6 bg-gradient-to-br from-white via-gray-100 to-gray-200 text-gray-900 shadow-lg">
       <h2 className="text-2xl font-semibold mb-4">User Task and Study Graphs</h2>
       
       {/* Filter buttons */}
@@ -137,13 +137,13 @@ const Graph = () => {
       {/* Flexbox layout for dividing charts into two boxes */}
       <div className="flex gap-6">
         {/* Task Completion Chart */}
-        <div className="flex-1 bg-gray-800 p-4 rounded-lg shadow-md">
+        <div className="flex-1 bg-white p-4 rounded-lg shadow-md">
           <h3 className="text-xl mb-4">Tasks Completion (Hours)</h3>
           <Line data={taskChartData} options={options} height={250} />
         </div>
 
         {/* Study Time and Growth Percentage Chart */}
-        <div className="flex-1 bg-gray-800 p-4 rounded-lg shadow-md">
+        <div className="flex-1 bg-white p-4 rounded-lg shadow-md">
           <h3 className="text-xl mb-4">Study Time & Growth Percentage</h3>
           <Line data={studyChartData} options={options} height={250} />
         </div>

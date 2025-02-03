@@ -27,33 +27,33 @@ const Leaderboard = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 via-gray-900 to-black text-white p-10">
+    <div className="mt-0 min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400 text-gray-800 p-10">
       <motion.div
-        className="w-full max-w-5xl bg-gray-700/80 p-8 rounded-xl shadow-2xl"
+        className="w-full max-w-5xl bg-white p-8 rounded-xl shadow-lg"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="text-4xl font-bold text-center mb-6">
+        <h2 className="text-4xl font-bold text-center mb-6 text-purple-900">
           <FaTrophy className="inline-block text-yellow-400 mr-3" />
           Leaderboard
         </h2>
 
-        <div className="overflow-hidden rounded-lg shadow-lg">
-          <table className="min-w-full table-auto bg-gray-800 rounded-lg">
+        <div className="overflow-hidden rounded-lg shadow-md">
+          <table className="min-w-full table-auto bg-gray-50 rounded-lg">
             <thead>
-              <tr className="bg-gray-700 text-white">
+              <tr className="bg-purple-700 text-white">
                 <th className="px-6 py-3 text-left">Rank</th>
                 <th className="px-6 py-3 text-left">Username</th>
                 <th className="px-6 py-3 text-left">Total Focus Minutes</th>
               </tr>
             </thead>
-            <tbody className="text-gray-300">
+            <tbody className="text-gray-700">
               {leaderboardData.map((user, index) => (
                 <motion.tr
                   key={user.userId}
-                  className={`hover:bg-gray-600/80 transition-colors duration-300 ${
-                    index % 2 === 0 ? "bg-gray-700" : "bg-gray-800"
+                  className={`hover:bg-purple-100 transition-colors duration-300 ${
+                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
                   }`}
                   whileHover={{ scale: 1.02 }}
                 >
@@ -62,7 +62,7 @@ const Leaderboard = () => {
                     {user.rank}
                   </td>
                   <td className="px-6 py-4">{user.username}</td>
-                  <td className="px-6 py-4 font-bold text-blue-400">
+                  <td className="px-6 py-4 font-bold text-purple-600">
                     {user.totalFocusMinutes.toFixed(2)} mins
                   </td>
                 </motion.tr>
