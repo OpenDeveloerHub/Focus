@@ -1,12 +1,18 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import axios from 'axios';
+import { useAuth } from '../context/auth'; // Import useAuth
 
 function Login() {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    usernameOrEmail: '',
+    password: '',
   });
+
+  const [error, setError] = useState('');
+  const [auth, setAuth] = useAuth(); // Get the auth context
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,87 +22,78 @@ function Login() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("User Logged In", formData);
+    try {
+      // Make sure to send both username/email and password to the backend
+      const response = await axios.post('http://localhost:5000/api/auth/login', {
+        email: formData.usernameOrEmail,  // Use email in the backend API
+        password: formData.password
+      });
+
+      console.log('User Logged In:', response.data);
+
+      // Save token to localStorage
+      localStorage.setItem('authToken', response.data.token);
+
+      // Update the auth context with the user data and token
+      setAuth({
+        user: response.data.user,  // Assuming response contains user data
+        token: response.data.token, // Save the token in context
+      });
+      console.log(auth);
+      console.log("djd");
+
+      navigate('/dashboard'); // Redirect to the dashboard after successful login
+    } catch (err) {
+      setError('Error logging in: ' + err.response?.data?.message || err.message);
+    }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-[#1e3a8a] to-[#9333ea] relative overflow-hidden">
-      {/* Animated Background Circles */}
-      <div className="absolute w-72 h-72 bg-purple-400 rounded-full opacity-20 blur-3xl top-10 left-10 animate-pulse"></div>
-      <div className="absolute w-96 h-96 bg-blue-400 rounded-full opacity-20 blur-3xl bottom-10 right-10 animate-pulse"></div>
-
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative bg-white/10 backdrop-blur-lg p-8 rounded-xl shadow-xl w-96 border border-white/20"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="bg-white p-8 rounded-2xl shadow-2xl w-96 backdrop-blur-lg bg-opacity-90"
       >
-        <h2 className="text-3xl font-bold text-center text-white mb-6 animate-fadeIn">
-          Welcome Back 👋
-        </h2>
+        <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">Login</h2>
+        
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
-        <form onSubmit={handleSubmit} className="animate-slideUp">
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-white"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="mt-1 p-2 w-full bg-transparent text-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 placeholder-gray-200"
-              placeholder="Enter your email"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-white"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="mt-1 p-2 w-full bg-transparent text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 placeholder-gray-200"
-              placeholder="Enter your password"
-            />
-          </div>
-
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {['usernameOrEmail', 'password'].map((field, index) => (
+            <div key={index} className="relative">
+              <input
+                type={field === 'password' ? 'password' : 'text'}
+                id={field}
+                name={field}
+                value={formData[field]}
+                onChange={handleChange}
+                required
+                placeholder={field === 'usernameOrEmail' ? 'Username or Email' : 'Password'}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 placeholder-gray-500"
+              />
+            </div>
+          ))}
+          
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             type="submit"
-            className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all"
+            className="w-full py-2 text-white font-semibold rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 hover:from-blue-500 hover:to-purple-500 transition-all duration-300 shadow-md"
           >
             Login
           </motion.button>
         </form>
 
-        <div className="mt-4 text-center">
-          <p className="text-sm text-gray-200">
-            Don't have an account?{" "}
-            <Link
-              to="/register"
-              className="text-blue-300 hover:underline transition-all"
-            >
-              Register here
-            </Link>
-          </p>
-        </div>
+        <p className="text-center text-gray-600 mt-4">
+          Don't have an account?{' '}
+          <Link to="/register" className="text-blue-600 font-semibold hover:underline">
+            Register here
+          </Link>
+        </p>
       </motion.div>
     </div>
   );
