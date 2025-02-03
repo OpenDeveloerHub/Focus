@@ -13,7 +13,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-purple-700 via-indigo-700 to-purple-900 fixed w-full top-0 shadow-lg z-50 backdrop-blur-md">
+    <nav className="bg-[#a283ff] fixed w-full top-0 shadow-lg z-50 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="text-3xl font-extrabold text-white tracking-wide">
@@ -69,7 +69,7 @@ const NavBar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-gradient-to-r from-purple-700 via-indigo-700 to-purple-900 p-6 border-t border-white/20 text-white space-y-4">
+        <div className="md:hidden bg-[#A020F0] p-6 border-t border-white/20 text-white space-y-4">
           {["Home", "Dashboard", "About", "Analysis"].map((item, index) => (
             <Link
               key={index}

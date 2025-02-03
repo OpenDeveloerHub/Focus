@@ -39,14 +39,14 @@ function Register() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-[#a283ff] to-[#6868b3]">
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="bg-white p-8 rounded-2xl shadow-2xl w-96 backdrop-blur-lg bg-opacity-90"
+        className="bg-[#ffffff] p-8 rounded-2xl shadow-2xl w-96 backdrop-blur-lg bg-opacity-90"
       >
-        <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">Create Account</h2>
+        <h2 className="text-3xl font-extrabold text-center text-[#6868b3] mb-6">Create Account</h2>
         
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
@@ -61,7 +61,7 @@ function Register() {
                 onChange={handleChange}
                 required
                 placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 placeholder-gray-500"
+                className="w-full px-4 py-2 border border-[#e4e4ff] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a283ff] text-[#6868b3] placeholder-[#cacaff]"
               />
             </div>
           ))}
@@ -70,15 +70,15 @@ function Register() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             type="submit"
-            className="w-full py-2 text-white font-semibold rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 hover:from-blue-500 hover:to-purple-500 transition-all duration-300 shadow-md"
+            className="w-full py-2 text-white font-semibold rounded-lg bg-gradient-to-r from-[#a283ff] to-[#6868b3] hover:from-[#6868b3] hover:to-[#a283ff] transition-all duration-300 shadow-md"
           >
             Register
           </motion.button>
         </form>
         
-        <p className="text-center text-gray-600 mt-4">
+        <p className="text-center text-[#6868b3] mt-4">
           Already have an account?{' '}
-          <Link to="/login" className="text-blue-600 font-semibold hover:underline">
+          <Link to="/login" className="text-[#a283ff] font-semibold hover:underline">
             Login here
           </Link>
         </p>

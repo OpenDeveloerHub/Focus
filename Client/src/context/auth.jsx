@@ -1,33 +1,33 @@
-import { useState, useEffect, useContext, createContext } from "react";
-import axios from "axios";
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 
+// Create the AuthContext
 const AuthContext = createContext();
 
+// AuthProvider to provide the context to the app
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     user: null,
-    token: "",
+    token: null,
   });
 
-  // Set the Authorization header whenever the token changes
+  // Fetch data from localStorage if present
   useEffect(() => {
-    if (auth.token) {
-      axios.defaults.headers.common["Authorization"] = auth.token;
-    }
-  }, [auth.token]);
-
-  // Initialize auth from localStorage
-  useEffect(() => {
-    const data = localStorage.getItem("auth");
-    if (data) {
-      const parseData = JSON.parse(data);
-      setAuth(prevState => ({
-        ...prevState,
-        user: parseData.user,
-        token: parseData.token,
-      }));
+    const storedData = localStorage.getItem('auth');
+    if (storedData) {
+      const { user, token } = JSON.parse(storedData);
+      setAuth({ user, token });
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; // Set Authorization header globally
     }
   }, []);
+
+  // Store auth data in localStorage whenever it changes
+  useEffect(() => {
+    if (auth.token && auth.user) {
+      localStorage.setItem('auth', JSON.stringify(auth));
+      axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`;
+    }
+  }, [auth]);
 
   return (
     <AuthContext.Provider value={[auth, setAuth]}>
@@ -36,6 +36,7 @@ const AuthProvider = ({ children }) => {
   );
 };
 
+// Custom hook to access auth context
 const useAuth = () => useContext(AuthContext);
 
 export { useAuth, AuthProvider };
