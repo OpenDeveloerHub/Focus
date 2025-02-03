@@ -16,44 +16,27 @@ const NavBar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-10 text-white font-medium">
-          <Link
-            to="/"
-            className="hover:text-yellow-300 transition duration-300 relative group"
-          >
-            Home
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-300 transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link
-            to="/dashboard"
-            className="hover:text-yellow-300 transition duration-300 relative group"
-          >
-            Dashboard
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-300 transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link
-            to="/about"
-            className="hover:text-yellow-300 transition duration-300 relative group"
-          >
-            About
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-300 transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link
-            to="/plan"
-            className="hover:text-yellow-300 transition duration-300 relative group"
-          >
-            Analysis
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-300 transition-all duration-300 group-hover:w-full"></span>
-          </Link>
+          {["Home", "Dashboard", "About", "Analysis"].map((item, index) => (
+            <Link
+              key={index}
+              to={`/${item.toLowerCase()}`}
+              className="hover:text-yellow-300 transition duration-300 relative group"
+            >
+              {item}
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-300 transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+          ))}
         </div>
 
         {/* Auth Buttons */}
         <div className="hidden md:flex items-center gap-6">
-          <SignedOut>
-            <SignInButton className="px-5 py-2 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg shadow-lg transition duration-300" />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+          <Link
+            to="/register"
+            className="relative px-6 py-2 text-white font-semibold rounded-lg overflow-hidden bg-yellow-400 hover:bg-yellow-500 transition duration-300 shadow-lg group"
+          >
+            <span className="absolute w-full h-full bg-yellow-300 scale-0 group-hover:scale-120 transition-transform duration-300"></span>
+            <span className="relative z-10">Join</span>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -68,27 +51,22 @@ const NavBar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-700 p-6 border-t border-white/20 text-white">
-          <Link to="/" className="block py-2 hover:text-yellow-300 transition duration-300">
-            Home
+        <div className="md:hidden bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-700 p-6 border-t border-white/20 text-white space-y-4">
+          {["Home", "Dashboard", "About", "Analysis"].map((item, index) => (
+            <Link
+              key={index}
+              to={`/${item.toLowerCase()}`}
+              className="block py-2 hover:text-yellow-300 transition duration-300"
+            >
+              {item}
+            </Link>
+          ))}
+          <Link
+            to="/register"
+            className="block w-full text-center py-2 font-semibold text-white bg-yellow-400 rounded-lg hover:bg-yellow-500 transition duration-300"
+          >
+            Join
           </Link>
-          <Link to="/dashboard" className="block py-2 hover:text-yellow-300 transition duration-300">
-            Dashboard
-          </Link>
-          <Link to="/about" className="block py-2 hover:text-yellow-300 transition duration-300">
-            About
-          </Link>
-          <Link to="/plan" className="block py-2 hover:text-yellow-300 transition duration-300">
-            Plan
-          </Link>
-          <SignedOut>
-            <SignInButton className="block mt-4 w-full text-center bg-indigo-600 hover:bg-indigo-700 py-2 rounded-lg shadow-lg transition duration-300" />
-          </SignedOut>
-          <SignedIn>
-            <div className="mt-4 flex justify-center">
-              <UserButton />
-            </div>
-          </SignedIn>
         </div>
       )}
     </nav>

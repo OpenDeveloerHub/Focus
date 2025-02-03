@@ -5,6 +5,8 @@ import DashBoard from "./Pages/DashBoard";
 import Plan from "./Pages/Plan";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer.Jsx";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 
 const App = () => {
   return (
@@ -13,10 +15,12 @@ const App = () => {
       <BrowserRouter>
         <NavBar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/*" element={<Home />} />
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/about" element={<About />} />
-          <Route path="/plan" element={<Plan />} />
+          <Route path="/analysis" element={<Plan />} />
+          <Route path="/login" element = {<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
         </Routes>
         <Footer/>
       </BrowserRouter>
