@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/auth";
 import { motion, AnimatePresence } from "framer-motion";
 import { Settings, X } from "lucide-react";
+import Task from "../Components/Task";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
@@ -13,16 +14,9 @@ const Home = () => {
 });
 
   const [time, setTime] = useState(25 * 60); // Default Focus Time = 25 minutes
+  const [fixTime, setFixtime] = useState(25*60);
   const [isActive, setIsActive] = useState(false);
   const [sessionType, setSessionType] = useState("Focus");
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false); // State to control drawer visibility
-  const [taskName, setTaskName] = useState(""); // Task name
-  const [taskNote, setTaskNote] = useState(""); // Task note
-  const [tasks, setTasks] = useState([
-    { id: Date.now(), name: "Conqueror", note: "Conquer the world", completed: false },
-    { id: Date.now() + 1, name: "Focused Study Session", note: "Spend 60 minutes studying, away from distractions.", completed: false },
-    { id: Date.now() + 2, name: "Exercise", note: "Take a 30-minute walk or workout session to stay active.", completed: false }
-  ]);
 
   // Update the time whenever the sessionType changes
   useEffect(() => {
@@ -33,6 +27,9 @@ const Home = () => {
     } else if (sessionType === "Long Break") {
       setTime(15 * 60); // Long Break time = 15 minutes
     }
+    setFormData({name: auth?.user?.username || "Guest",
+      email: auth?.user?.email || "guest@gmail.com",
+      theme: "light",})
   }, [sessionType]);
 
   useEffect(() => {
@@ -51,14 +48,17 @@ const Home = () => {
     if (time === 0) {
       if (sessionType === "Focus") {
         setSessionType("Break");
+        setIsActive(false); // Ensure timer is paused when switching to Break
       } else if (sessionType === "Break") {
         setSessionType("Long Break");
+        setIsActive(false); // Ensure timer is paused when switching to Long Break
       } else {
         setSessionType("Focus");
+        setIsActive(false); // Ensure timer is paused when switching back to Focus
       }
-      setIsActive(false);
     }
   }, [time, sessionType]);
+  
 
   const toggleTimer = () => {
     setIsActive(!isActive);
@@ -76,30 +76,24 @@ const Home = () => {
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const addTask = () => {
-    if (taskName.trim() !== "") {
-      setTasks([...tasks, { id: Date.now(), name: taskName, note: taskNote, completed: false }]);
-      setTaskName("");
-      setTaskNote("");
-      setIsDrawerOpen(false);
-    }
-  };
-
-  const toggleTaskCompletion = (id) => {
-    setTasks(tasks.map((task) => task.id === id ? { ...task, completed: !task.completed } : task));
+  const handleThemeToggle = () => {
+    setFormData({
+      ...formData,
+      theme: formData.theme === "light" ? "dark" : "light",
+    });
   };
 
   // Circular Timer styles
   const getCircleStroke = (time) => {
     const radius = 90; // Radius of the circle
     const circumference = 2 * Math.PI * radius;
-    const offset = (time / (sessionType === "Focus" ? {time} * 60 : sessionType === "Break" ? 5 * 60 : 15 * 60)) * circumference;
+    const offset = (time / (sessionType === "Focus" ? {fixTime} * 60 : sessionType === "Break" ? 5 * 60 : 15 * 60)) * circumference;
+    console.log(offset)
     return {
       strokeDasharray: circumference,
       strokeDashoffset: offset,
     };
   };
-
   return (
     <div className="bg-gradient-to-br from-gray-100 via-[#e4e4ff] to-[#ffffff] min-h-screen">
       <main className="mt-12 p-6 text-center">
@@ -132,18 +126,19 @@ const Home = () => {
                 Break
               </button>
               <button
-                onClick={() => setSessionType("Long Break")}
-                className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 rounded-2xl hover:bg-gray-400 hover:text-white hover:font-bold ${sessionType === "Long Break" ? "bg-[#a283ff] text-white font-bold bg-gray-600 " : ""}`}
-              >
-                Long Break
-              </button>
+  onClick={() => setSessionType("Long Break")}
+  className={`py-2 text-[#6868b3] border-0 transition duration-300 rounded-2xl hover:bg-gray-400 hover:text-white hover:font-bold ${sessionType === "Long Break" ? "bg-[#a283ff] text-white font-bold bg-gray-600" : ""}`}
+  style={{ width: '125px' }} // Correctly set the width to 35px
+>
+  Long Break
+</button>
             </div>
   
             <div className="relative w-64 h-64 mb-6">
               {/* Circular Timer */}
               <svg className="w-full h-full transform -rotate-90" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50%" cy="50%" r="90" stroke="#a283ff" strokeWidth="10" fill="none" />
-                <circle cx="50%" cy="50%" r="90" stroke="#fff" strokeWidth="10" fill="none" style={getCircleStroke(time)} />
+                <circle cx="50%" cy="50%" r="90" stroke="#a283ff" strokeWidth="12" fill="none" />
+                <circle cx="50%" cy="50%" r="90" stroke="#fff" strokeWidth="12" fill="none" style={getCircleStroke(time)} />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center text-5xl text-[#6868b3]">
                 {formatTime(time)}
@@ -170,7 +165,7 @@ const Home = () => {
               >
                 Reset
               </motion.button>
-              {/* Settings Button */}
+            {/* Settings Button */}
               <motion.button
                 onClick={() => setOpen(true)}
                 whileHover={{ scale: 1.1 }}
@@ -238,7 +233,7 @@ const Home = () => {
                   <input
                     type="checkbox"
                     checked={formData.theme === "dark"}
-                    // onChange={handleThemeToggle}
+                    onChange={handleThemeToggle}
                     className="toggle-checkbox appearance-none w-12 h-6 rounded-full bg-gray-300 relative cursor-pointer transition-all"
                   />
                   <span className="text-gray-700">Dark</span>
@@ -251,7 +246,9 @@ const Home = () => {
   <input
     type="number"
     value={Math.floor(time / 60)} // Convert seconds back to minutes for display
-    onChange={(e) => setTime(e.target.value * 60)} // Store the value in seconds
+    onChange={(e) => {setTime(e.target.value * 60);
+      setFixtime(e.target.value * 60)
+    }} // Store the value in seconds
     className="w-full px-4 py-3 mt-2 border rounded-md shadow-sm bg-gray-100 text-gray-600 focus:ring-2 focus:ring-[#6868b3] focus:outline-none"
   />
 </div>
@@ -273,103 +270,10 @@ const Home = () => {
         </div>
   
         {/* Task List Section */}
-        <div className="w-full h-100 md:w-1/3 p-6 bg-white rounded-lg shadow-xl">
-          <div className="mb-6 flex justify-between items-center">
-            <h2 className="text-3xl font-semibold text-[#6868b3]">Tasks</h2>
-            <button
-              onClick={() => setIsDrawerOpen(true)}
-              className="px-4 py-2 bg-[#6868b3] text-white rounded-lg hover:bg-[#a283ff] transition duration-300"
-            >
-              Add Task
-            </button>
-          </div>
-  
-          {/* Task List with Scrollbar */}
-          <div className="w-full h-60 overflow-y-auto bg-white p-4">
-            <div className="space-y-2">
-              {tasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={task.completed}
-                        onChange={() => toggleTaskCompletion(task.id)}
-                        className="form-checkbox h-4 w-4 text-[#6868b3] rounded focus:ring-2 focus:ring-[#a283ff]"
-                      />
-                      <span
-                        className={`ml-3 text-base font-semibold ${task.completed ? 'line-through text-[#cacaff]' : 'text-[#6868b3]'}`}
-                      >
-                        {task.name}
-                      </span>
-                    </div>
-                    <button
-                      onClick={() => setIsDrawerOpen(true)}
-                      className="px-4 py-2 bg-[#6868b3] text-white rounded-lg hover:bg-[#a283ff] transition duration-300"
-                    >
-                      Edit
-                    </button>
-                  </div>
-                  {task.note && (
-                    <p className={`mt-2 text-sm ${task.completed ? 'line-through text-[#cacaff]' : 'text-[#6868b3]'}`}>
-                      {task.note}
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      {/* Task Info Drawer */}
-      <div
-        className={`fixed inset-0 bg-gray-300/30 z-40 ${isDrawerOpen ? "block" : "hidden"}`}
-        onClick={() => setIsDrawerOpen(false)}
-      />
-      <div
-        className={`fixed right-0 top-0 w-80 bg-gradient-to-br from-[#e4e4ff] via-[#cacaff] to-[#a283ff] text-gray-900 h-full transition-transform transform ${isDrawerOpen ? "translate-x-0" : "translate-x-full"} z-50 rounded-l-xl shadow-2xl`}
-      >
-        <div className="p-6">
-          <h2 className="text-3xl font-semibold mb-6 text-[#6868b3] tracking-wide">Task Details</h2>
-          <div className="mb-6">
-            <label className="block text-lg font-medium mb-2 text-[#6868b3]">Task Name</label>
-            <input
-              type="text"
-              value={taskName}
-              onChange={(e) => setTaskName(e.target.value)}
-              className="w-full p-3 border border-[#cacaff] rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-[#a283ff]"
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block text-lg font-medium mb-2 text-[#6868b3]">Notes</label>
-            <textarea
-              rows="4"
-              value={taskNote}
-              onChange={(e) => setTaskNote(e.target.value)}
-              className="w-full p-3 border border-[#cacaff] rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-[#a283ff]"
-            />
-          </div>
-          <div className="flex justify-between">
-            <button
-              onClick={() => setIsDrawerOpen(false)}
-              className="px-4 py-2 bg-[#6868b3] text-white rounded-lg hover:bg-[#a283ff] transition duration-300"
-            >
-              Close
-            </button>
-            <button
-              onClick={addTask}
-              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300"
-            >
-              Save Task
-            </button>
-          </div>
-        </div>
+        <Task className="w-full h-100 md:w-1/3 p-6 bg-white rounded-lg shadow-xl"/>
       </div>
     </div>
+    
   );
 };  
 
