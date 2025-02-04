@@ -109,7 +109,7 @@ const Home = () => {
       <div className="flex flex-col md:flex-row min-h-screen mt-12 space-y-8 md:space-y-0">
 
         {/* Timer Section */}
-        <div className="mb-16 w-full md:w-1/2 flex justify-center items-center p-8 h-102">
+        <div className="mb-16 w-full md:w-1/2 flex justify-center items-center p-8 mt-7 h-102">
           <div className="backdrop-blur-lg bg-[#e4e4ff] p-8 rounded-2xl shadow-lg border border-white/30 w-96 flex flex-col items-center">
             <div className="flex gap-4 justify-center mt-6">
               <button
