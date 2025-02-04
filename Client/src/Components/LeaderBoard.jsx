@@ -15,7 +15,7 @@ const Leaderboard = () => {
 
   useEffect(() => {
     axios
-      .get(`https://focus-l.vercel.app/api/leaderboard/weekly?page=${currentPage}&limit=${usersPerPage}`)
+      .get(`https://focus-59nh.vercel.app/api/leaderboard/weekly?page=${currentPage}&limit=${usersPerPage}`)
       .then((response) => {
         setLeaderboardData(response.data.users);
         setTotalPages(response.data.totalPages);
