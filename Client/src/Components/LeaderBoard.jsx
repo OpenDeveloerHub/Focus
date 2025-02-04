@@ -24,7 +24,7 @@ const Leaderboard = () => {
 
     if (auth?.user?._id) {
       axios
-        .get(`https://focus-l.vercel.app/api/leaderboard/weekly/${auth.user._id}`)
+        .get(`https://focus-59nh.vercel.app/api/leaderboard/weekly/${auth.user._id}`)
         .then((response) => setUserRank(response.data.rank))
         .catch((error) => console.error("Error fetching user rank:", error));
 
