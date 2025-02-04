@@ -22,7 +22,9 @@ const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 // const io = new Server(server, { cors: { origin: '*' } });
 
-app.use(cors());
+app.use(cors(
+    origin :'*'
+));
 app.get('/', (req, res) => {
     res.send('Hellov bro');
 });
