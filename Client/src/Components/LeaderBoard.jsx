@@ -15,7 +15,7 @@ const Leaderboard = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/leaderboard/weekly?page=${currentPage}&limit=${usersPerPage}`)
+      .get(`https://focus-l.vercel.app/api/leaderboard/weekly?page=${currentPage}&limit=${usersPerPage}`)
       .then((response) => {
         setLeaderboardData(response.data.users);
         setTotalPages(response.data.totalPages);
@@ -24,7 +24,7 @@ const Leaderboard = () => {
 
     if (auth?.user?._id) {
       axios
-        .get(`http://localhost:5000/api/leaderboard/weekly/${auth.user._id}`)
+        .get(`https://focus-l.vercel.app/api/leaderboard/weekly/${auth.user._id}`)
         .then((response) => setUserRank(response.data.rank))
         .catch((error) => console.error("Error fetching user rank:", error));
 
