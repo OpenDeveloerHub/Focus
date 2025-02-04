@@ -53,11 +53,7 @@ const Home = () => {
     if (time === 0) {
       handleSessionEnd();
     }
-<<<<<<< HEAD
-  }, [time, sessionType]);
-=======
   }, [time]);
->>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
 
   const toggleTimer = () => {
     if (!isActive) {
@@ -107,8 +103,6 @@ const Home = () => {
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
-<<<<<<< HEAD
-=======
   const handleSessionChange = (type) => {
     handleSessionEnd(); // Make API call when switching session type
     setSessionType(type); // Change the session type
@@ -122,7 +116,6 @@ const Home = () => {
     });
   };
 
->>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
   // Circular Timer styles
   const getCircleStroke = (time) => {
     const radius = 90; // Radius of the circle
@@ -151,34 +144,14 @@ const Home = () => {
         {/* Timer Section */}
         <div className="mb-16 w-full md:w-1/2 flex justify-center items-center p-8 mt-7 h-102">
           <div className="backdrop-blur-lg bg-[#e4e4ff] p-8 rounded-2xl shadow-lg border border-white/30 w-96 flex flex-col items-center">
-<<<<<<< HEAD
-            <div className="flex gap-4 justify-center mt-6">
-              <button
-                onClick={() => setSessionType("Focus")}
-                className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 rounded-2xl hover:bg-green-300 hover:text-white hover:font-bold ${sessionType === "Focus" ? "rounded-2xl text-white font-bold bg-green-500" : ""}`}
-=======
           <div className="flex gap-4 justify-center mt-6">
           <button
                 onClick={() => handleSessionChange("Focus")}
                 className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 rounded-2xl hover:bg-green-300 hover:text-white hover:font-bold ${sessionType === "Focus" ? "bg-[#a283ff] rounded-2xl text-white font-bold bg-green-500" : ""}`}
->>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
               >
                 Focus
               </button>
               <button
-<<<<<<< HEAD
-                onClick={() => setSessionType("Break")}
-                className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 hover:bg-orange-300 rounded-2xl hover:text-white hover:font-bold ${sessionType === "Break" ? " rounded-2xl text-white font-bold bg-orange-600" : ""}`}
-              >
-                Break
-              </button>
-              <button onClick={() => setSessionType("Long Break")} 
-              className={`py-2 text-[#6868b3] border-0 transition duration-300 rounded-2xl hover:bg-gray-400 hover:text-white hover:font-bold ${sessionType === "Long Break" ? " text-white font-bold bg-gray-600" : ""}`} style={{ width: '125px' }} >
-                Long Break
-              </button>
-            </div>
-            
-=======
                 onClick={() => handleSessionChange("Break")}
                 className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 hover:bg-orange-300 rounded-2xl hover:text-white hover:font-bold ${sessionType === "Break" ? "bg-[#a283ff] rounded-2xl text-white font-bold bg-orange-600" : ""}`}
               >
@@ -194,7 +167,6 @@ const Home = () => {
              </div>
 
   
->>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
             <div className="relative w-64 h-64 mb-6">
               {/* Circular Timer */}
               <svg className="w-full h-full transform -rotate-90" xmlns="http://www.w3.org/2000/svg">
@@ -247,8 +219,4 @@ const Home = () => {
     </div>
   );
 };  
-<<<<<<< HEAD
-=======
-
->>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
 export default Home;
