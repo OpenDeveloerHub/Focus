@@ -53,7 +53,9 @@ const Home = () => {
     if (time === 0) {
       handleSessionEnd();
     }
+<<<<<<< HEAD
   }, [time, sessionType]);
+=======
   }, [time]);
 
   const toggleTimer = () => {
@@ -104,8 +106,6 @@ const Home = () => {
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
-<<<<<<< HEAD
-=======
   const handleSessionChange = (type) => {
     handleSessionEnd(); // Make API call when switching session type
     setSessionType(type); // Change the session type
@@ -119,7 +119,6 @@ const Home = () => {
     });
   };
 
->>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
   // Circular Timer styles
   const getCircleStroke = (time) => {
     const radius = 90; // Radius of the circle
@@ -156,7 +155,7 @@ const Home = () => {
                 Focus
               </button>
               <button
- HEAD
+<<<<<<< HEAD
                 onClick={() => setSessionType("Break")}
                 className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 hover:bg-orange-300 rounded-2xl hover:text-white hover:font-bold ${sessionType === "Break" ? " rounded-2xl text-white font-bold bg-orange-600" : ""}`}
               >
@@ -168,6 +167,7 @@ const Home = () => {
               </button>
             </div>
             
+=======
                 onClick={() => handleSessionChange("Break")}
                 className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 hover:bg-orange-300 rounded-2xl hover:text-white hover:font-bold ${sessionType === "Break" ? "bg-[#a283ff] rounded-2xl text-white font-bold bg-orange-600" : ""}`}
               >
@@ -182,6 +182,8 @@ const Home = () => {
 </button>
              </div>
 
+  
+>>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
             <div className="relative w-64 h-64 mb-6">
               {/* Circular Timer */}
               <svg className="w-full h-full transform -rotate-90" xmlns="http://www.w3.org/2000/svg">
@@ -234,5 +236,8 @@ const Home = () => {
     </div>
   );
 };  
+<<<<<<< HEAD
+=======
 
+>>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
 export default Home;
