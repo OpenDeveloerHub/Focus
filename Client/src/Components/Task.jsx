@@ -54,7 +54,7 @@ function Task() {
   
 
   return (
-    <div className="ml-4 flex flex-col items-center w-135 h-full  py-0">
+    <div className="flex flex-col items-center w-full h-full  py-0">
       <div className="w-full max-w-2xl p-6 bg-white rounded-lg shadow-xl">
         <div className="mb-12 flex justify-between items-center">
           <h2 className="text-4xl font-bold text-[#4A4A8C]">Tasks</h2>
