@@ -6,18 +6,11 @@ function Task() {
     { 
       id: 1, name: "Sample Task", completed: false, note: "This is a sample note."
      },
-<<<<<<< HEAD
-     { 
-      id: 2, name: "Sample Task", completed: false, note: "This is a sample note."
-     },
-     { 
-      id: 3, name: "Sample Task", completed: false, note: "This is a sample note."
-     },
-=======
-    
+
+
      { id: Date.now() + 1, name: "Focused Study Session", note: "Spend 60 minutes studying, away from distractions.", completed: false },
      { id: Date.now() + 2, name: "Exercise", note: "Take a 30-minute walk or workout session to stay active.", completed: false }
->>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
+
   ]);
   const [taskName, setTaskName] = useState("");
   const [taskNote, setTaskNote] = useState("");
@@ -61,11 +54,7 @@ function Task() {
   
 
   return (
-<<<<<<< HEAD
-    <div className="flex flex-col items-center w-full h-full  py-0">
-=======
     <div className="ml-4 flex flex-col items-center w-135 h-full  py-0">
->>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
       <div className="w-full max-w-2xl p-6 bg-white rounded-lg shadow-xl">
         <div className="mb-12 flex justify-between items-center">
           <h2 className="text-4xl font-bold text-[#4A4A8C]">Tasks</h2>
