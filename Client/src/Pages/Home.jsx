@@ -8,6 +8,7 @@ import Setting from "../Components/Setting";
 const Home = () => {
   const [open, setOpen] = useState(false);
   const [auth, setAuth] = useAuth(); 
+  
   const [formData, setFormData] = useState({
   name: auth?.user?.username || "Guest",
   email: auth?.user?.email || "guest@gmail.com",
@@ -18,24 +19,27 @@ const Home = () => {
   const [fixTime, setFixtime] = useState(25*60);
   const [isActive, setIsActive] = useState(false);
   const [sessionType, setSessionType] = useState("Focus");
+  const [startTime, setStartTime] = useState(null);
+
 
   // Update the time whenever the sessionType changes
   useEffect(() => {
     if (sessionType === "Focus") {
-      setTime(25 * 60); // Focus time = 25 minutes
+      setTime(25 * 60);
     } else if (sessionType === "Break") {
-      setTime(5 * 60); // Break time = 5 minutes
+      setTime(5 * 60);
     } else if (sessionType === "Long Break") {
-      setTime(15 * 60); // Long Break time = 15 minutes
+      setTime(15 * 60);
     }
-    setFormData({name: auth?.user?.username || "Guest",
-      email: auth?.user?.email || "guest@gmail.com",
-      theme: "light",})
+    setIsActive(false);
+    
+   
   }, [sessionType]);
 
   useEffect(() => {
     let interval;
     if (isActive) {
+      if (!startTime) setStartTime(new Date());
       interval = setInterval(() => {
         setTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       }, 1000);
@@ -47,28 +51,55 @@ const Home = () => {
 
   useEffect(() => {
     if (time === 0) {
-      if (sessionType === "Focus") {
-        setSessionType("Break");
-        setIsActive(false); // Ensure timer is paused when switching to Break
-      } else if (sessionType === "Break") {
-        setSessionType("Long Break");
-        setIsActive(false); // Ensure timer is paused when switching to Long Break
-      } else {
-        setSessionType("Focus");
-        setIsActive(false); // Ensure timer is paused when switching back to Focus
-      }
+      handleSessionEnd();
     }
+<<<<<<< HEAD
   }, [time, sessionType]);
+=======
+  }, [time]);
+>>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
 
   const toggleTimer = () => {
+    if (!isActive) {
+      setStartTime(new Date());
+    } else {
+      handleSessionEnd();
+    }
     setIsActive(!isActive);
   };
 
   const resetTimer = () => {
+    handleSessionEnd(); // Ensure API call is made when reset
     setIsActive(false);
     setSessionType("Focus");
-    setTime(25 * 60); // Reset to 25 minutes when switching back to Focus
+    setTime(25 * 60);
   };
+
+  const handleSessionEnd = async () => {
+    if (!startTime) return;
+    const endTime = new Date();
+    const duration = (endTime - startTime) / 60000;
+    if (duration <= 0 || sessionType !== "Focus") return; // Only send session data if it's a Focus session
+  
+    try {
+      console.log("try to hit");
+      await fetch("http://localhost:5000/api/focus/add-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: auth?.user?._id,
+          startTime,
+          endTime,
+          projectName: "General Focus",
+        }),
+      });
+    } catch (error) {
+      console.error("Error saving session:", error);
+    }
+  
+    setStartTime(null);
+  };
+  
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -76,6 +107,22 @@ const Home = () => {
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
+<<<<<<< HEAD
+=======
+  const handleSessionChange = (type) => {
+    handleSessionEnd(); // Make API call when switching session type
+    setSessionType(type); // Change the session type
+  };
+
+
+  const handleThemeToggle = () => {
+    setFormData({
+      ...formData,
+      theme: formData.theme === "light" ? "dark" : "light",
+    });
+  };
+
+>>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
   // Circular Timer styles
   const getCircleStroke = (time) => {
     const radius = 90; // Radius of the circle
@@ -104,14 +151,22 @@ const Home = () => {
         {/* Timer Section */}
         <div className="mb-16 w-full md:w-1/2 flex justify-center items-center p-8 mt-7 h-102">
           <div className="backdrop-blur-lg bg-[#e4e4ff] p-8 rounded-2xl shadow-lg border border-white/30 w-96 flex flex-col items-center">
+<<<<<<< HEAD
             <div className="flex gap-4 justify-center mt-6">
               <button
                 onClick={() => setSessionType("Focus")}
                 className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 rounded-2xl hover:bg-green-300 hover:text-white hover:font-bold ${sessionType === "Focus" ? "rounded-2xl text-white font-bold bg-green-500" : ""}`}
+=======
+          <div className="flex gap-4 justify-center mt-6">
+          <button
+                onClick={() => handleSessionChange("Focus")}
+                className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 rounded-2xl hover:bg-green-300 hover:text-white hover:font-bold ${sessionType === "Focus" ? "bg-[#a283ff] rounded-2xl text-white font-bold bg-green-500" : ""}`}
+>>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
               >
                 Focus
               </button>
               <button
+<<<<<<< HEAD
                 onClick={() => setSessionType("Break")}
                 className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 hover:bg-orange-300 rounded-2xl hover:text-white hover:font-bold ${sessionType === "Break" ? " rounded-2xl text-white font-bold bg-orange-600" : ""}`}
               >
@@ -123,6 +178,23 @@ const Home = () => {
               </button>
             </div>
             
+=======
+                onClick={() => handleSessionChange("Break")}
+                className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 hover:bg-orange-300 rounded-2xl hover:text-white hover:font-bold ${sessionType === "Break" ? "bg-[#a283ff] rounded-2xl text-white font-bold bg-orange-600" : ""}`}
+              >
+                Break
+              </button>
+              <button
+  onClick={() => handleSessionChange("Long Break")}
+  className={`py-2 text-[#6868b3] border-0 transition duration-300 rounded-2xl hover:bg-gray-400 hover:text-white hover:font-bold ${sessionType === "Long Break" ? "bg-[#a283ff] text-white font-bold bg-gray-600" : ""}`}
+  style={{ width: '125px' }} // Correctly set the width to 35px
+>
+  Long Break
+</button>
+             </div>
+
+  
+>>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
             <div className="relative w-64 h-64 mb-6">
               {/* Circular Timer */}
               <svg className="w-full h-full transform -rotate-90" xmlns="http://www.w3.org/2000/svg">
@@ -175,4 +247,8 @@ const Home = () => {
     </div>
   );
 };  
+<<<<<<< HEAD
+=======
+
+>>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
 export default Home;
