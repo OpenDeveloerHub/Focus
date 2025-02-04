@@ -30,7 +30,7 @@ function Register() {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+      const response = await axios.post('https://focus-l.vercel.app/api/auth/register', formData);
       console.log('User Registered:', response.data);
       navigate('/login'); // Redirect to login page after successful registration
     } catch (err) {
