@@ -3,7 +3,15 @@ import React, { useState } from "react";
 function Task() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [tasks, setTasks] = useState([
-    { id: 1, name: "Sample Task", completed: false, note: "This is a sample note." },
+    { 
+      id: 1, name: "Sample Task", completed: false, note: "This is a sample note."
+     },
+     { 
+      id: 2, name: "Sample Task", completed: false, note: "This is a sample note."
+     },
+     { 
+      id: 3, name: "Sample Task", completed: false, note: "This is a sample note."
+     },
   ]);
   const [taskName, setTaskName] = useState("");
   const [taskNote, setTaskNote] = useState("");
@@ -47,9 +55,9 @@ function Task() {
   };
 
   return (
-    <div className="flex flex-col items-center w-150  py-10">
+    <div className="ml-4 flex flex-col items-center w-135 h-full  py-0">
       <div className="w-full max-w-2xl p-6 bg-white rounded-lg shadow-xl">
-        <div className="mb-6 flex justify-between items-center">
+        <div className="mb-12 flex justify-between items-center">
           <h2 className="text-4xl font-bold text-[#4A4A8C]">Tasks</h2>
           <button
             onClick={() => {
