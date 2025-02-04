@@ -103,7 +103,7 @@ const Home = () => {
   const getCircleStroke = (time) => {
     const radius = 90; // Radius of the circle
     const circumference = 2 * Math.PI * radius;
-    const offset = (time / (sessionType === "Focus" ? 25 * 60 : sessionType === "Break" ? 5 * 60 : 15 * 60)) * circumference;
+    const offset = (time / (sessionType === "Focus" ? time * 60 : sessionType === "Break" ? 5 * 60 : 15 * 60)) * circumference;
     return {
       strokeDasharray: circumference,
       strokeDashoffset: offset,
