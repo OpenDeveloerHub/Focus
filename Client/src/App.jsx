@@ -4,7 +4,7 @@ import Home from "./Pages/Home";
 import DashBoard from "./Pages/DashBoard";
 import Plan from "./Pages/Plan";
 import NavBar from "./Components/NavBar";
-import Footer from "./Components/Footer.Jsx";
+import Footer from "./Components/Footer.jsx";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 

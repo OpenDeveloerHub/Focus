@@ -26,7 +26,7 @@ function Login() {
     e.preventDefault();
     try {
       // Make sure to send both username/email and password to the backend
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post('https://focus-l.vercel.app/api/auth/login', {
         email: formData.usernameOrEmail,
         password: formData.password,
       });
