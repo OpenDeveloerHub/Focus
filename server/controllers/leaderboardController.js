@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 const DailyFocus = require('../models/DailyFocus');
 const User = require('../models/User');
 
@@ -50,40 +52,74 @@ exports.getLeaderboard = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+
+
 exports.getUserRank = async (req, res) => {
+    console.log("Reached API");
+
     try {
-        const { userId } = req.params;
+        const { userId } = req.params; // Extract userId from request params
+
+        if (!mongoose.isValidObjectId(userId)) {
+            return res.status(400).json({ message: "Invalid user ID format" });
+        }
+
+        // Convert userId to ObjectId format
+        const userObjectId = new mongoose.Types.ObjectId(userId);
+
+        // Check if the user exists
+        const user = await User.findById(userObjectId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
 
         // Get total focus minutes for the past week
         const oneWeekAgo = new Date();
         oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
         const weeklyData = await DailyFocus.aggregate([
-            { $match: { date: { $gte: oneWeekAgo.toISOString().split('T')[0] } } },
-            { $group: { _id: "$userId", totalFocusMinutes: { $sum: "$totalFocusMinutes" } } },
+            {
+                $match: {
+                    date: { $gte: oneWeekAgo.toISOString().split('T')[0] } // Filter last 7 days
+                }
+            },
+            {
+                $group: {
+                    _id: "$userId",  // Group by `userId`
+                    totalFocusMinutes: { $sum: "$totalFocusMinutes" } // Sum focus minutes
+                }
+            },
+            {
+                $sort: { totalFocusMinutes: -1 } // Sort in descending order
+            }
         ]);
 
+        console.log("Weekly Data:", weeklyData); // Debugging
+
+        // Create a map of user focus minutes
         const focusDataMap = weeklyData.reduce((acc, entry) => {
-            acc[entry._id] = entry.totalFocusMinutes;
+            acc[entry._id.toString()] = entry.totalFocusMinutes;
             return acc;
         }, {});
 
-        // Sort users by total focus minutes
-        const sortedUsers = Object.keys(focusDataMap)
-            .map(userId => ({
-                userId,
-                totalFocusMinutes: focusDataMap[userId],
+        // Get all users
+        const allUsers = await User.find({}, "_id");
+
+        // Assign ranks
+        const sortedUsers = allUsers
+            .map(user => ({
+                userId: user._id.toString(),
+                totalFocusMinutes: focusDataMap[user._id.toString()] || 0 // Default to 0 if no data
             }))
             .sort((a, b) => b.totalFocusMinutes - a.totalFocusMinutes);
 
-        // Find the rank of the requested user
+        // Find the user's rank
         const userRank = sortedUsers.findIndex(user => user.userId === userId) + 1;
+        const userFocusMinutes = focusDataMap[userId] || 0;
 
-        if (userRank > 0) {
-            res.json({ rank: userRank });
-        } else {
-            res.status(404).json({ message: "User not found" });
-        }
+        return res.json({ userId, rank: userRank, totalFocusMinutes: userFocusMinutes });
+
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
