@@ -10,17 +10,16 @@ const Home = () => {
   const [auth, setAuth] = useAuth(); 
   
   const [formData, setFormData] = useState({
-  name: auth?.user?.username || "Guest",
-  email: auth?.user?.email || "guest@gmail.com",
-  theme: "light",
-});
+    name: auth?.user?.username || "Guest",
+    email: auth?.user?.email || "guest@gmail.com",
+    theme: "light",
+  });
 
   const [time, setTime] = useState(25 * 60); // Default Focus Time = 25 minutes
   const [fixTime, setFixtime] = useState(25*60);
   const [isActive, setIsActive] = useState(false);
   const [sessionType, setSessionType] = useState("Focus");
   const [startTime, setStartTime] = useState(null);
-
 
   // Update the time whenever the sessionType changes
   useEffect(() => {
@@ -32,8 +31,6 @@ const Home = () => {
       setTime(15 * 60);
     }
     setIsActive(false);
-    
-   
   }, [sessionType]);
 
   useEffect(() => {
@@ -53,9 +50,6 @@ const Home = () => {
     if (time === 0) {
       handleSessionEnd();
     }
-<<<<<<< HEAD
-  }, [time, sessionType]);
-=======
   }, [time]);
 
   const toggleTimer = () => {
@@ -98,7 +92,6 @@ const Home = () => {
   
     setStartTime(null);
   };
-  
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -110,7 +103,6 @@ const Home = () => {
     handleSessionEnd(); // Make API call when switching session type
     setSessionType(type); // Change the session type
   };
-
 
   const handleThemeToggle = () => {
     setFormData({
@@ -129,6 +121,7 @@ const Home = () => {
       strokeDashoffset: offset,
     };
   };
+
   return (
     <div className="bg-gradient-to-br from-gray-100 via-[#e4e4ff] to-[#ffffff] min-h-screen">
       <main className="mt-12 p-6 text-center">
@@ -147,43 +140,28 @@ const Home = () => {
         {/* Timer Section */}
         <div className="mb-16 w-full md:w-1/2 flex justify-center items-center p-8 mt-7 h-102">
           <div className="backdrop-blur-lg bg-[#e4e4ff] p-8 rounded-2xl shadow-lg border border-white/30 w-96 flex flex-col items-center">
-          <div className="flex gap-4 justify-center mt-6">
-          <button
+            <div className="flex gap-4 justify-center mt-6">
+              <button
                 onClick={() => handleSessionChange("Focus")}
                 className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 rounded-2xl hover:bg-green-300 hover:text-white hover:font-bold ${sessionType === "Focus" ? "bg-[#a283ff] rounded-2xl text-white font-bold bg-green-500" : ""}`}
               >
                 Focus
               </button>
               <button
-<<<<<<< HEAD
-                onClick={() => setSessionType("Break")}
-                className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 hover:bg-orange-300 rounded-2xl hover:text-white hover:font-bold ${sessionType === "Break" ? " rounded-2xl text-white font-bold bg-orange-600" : ""}`}
-              >
-                Break
-              </button>
-              <button onClick={() => setSessionType("Long Break")} 
-              className={`py-2 text-[#6868b3] border-0 transition duration-300 rounded-2xl hover:bg-gray-400 hover:text-white hover:font-bold ${sessionType === "Long Break" ? " text-white font-bold bg-gray-600" : ""}`} style={{ width: '125px' }} >
-                Long Break
-              </button>
-            </div>
-            
-=======
                 onClick={() => handleSessionChange("Break")}
                 className={`px-6 py-2 text-[#6868b3] border-0 transition duration-300 hover:bg-orange-300 rounded-2xl hover:text-white hover:font-bold ${sessionType === "Break" ? "bg-[#a283ff] rounded-2xl text-white font-bold bg-orange-600" : ""}`}
               >
                 Break
               </button>
               <button
-  onClick={() => handleSessionChange("Long Break")}
-  className={`py-2 text-[#6868b3] border-0 transition duration-300 rounded-2xl hover:bg-gray-400 hover:text-white hover:font-bold ${sessionType === "Long Break" ? "bg-[#a283ff] text-white font-bold bg-gray-600" : ""}`}
-  style={{ width: '125px' }} // Correctly set the width to 35px
->
-  Long Break
-</button>
-             </div>
-
-  
->>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
+                onClick={() => handleSessionChange("Long Break")}
+                className={`py-2 text-[#6868b3] border-0 transition duration-300 rounded-2xl hover:bg-gray-400 hover:text-white hover:font-bold ${sessionType === "Long Break" ? "bg-[#a283ff] text-white font-bold bg-gray-600" : ""}`}
+                style={{ width: '125px' }}
+              >
+                Long Break
+              </button>
+            </div>
+            
             <div className="relative w-64 h-64 mb-6">
               {/* Circular Timer */}
               <svg className="w-full h-full transform -rotate-90" xmlns="http://www.w3.org/2000/svg">
@@ -215,7 +193,7 @@ const Home = () => {
               >
                 Reset
               </motion.button>
-            {/* Settings Button */}
+              {/* Settings Button */}
               <motion.button
                 onClick={() => setOpen(true)}
                 whileHover={{ scale: 1.1 }}
@@ -227,7 +205,7 @@ const Home = () => {
             </div>
   
             {/* Settings Modal */}
-            <Setting open={open} setOpen={setOpen} formData={formData} setFormData={setFormData} time ={time}setTime = {setTime}setFixtime = {setFixtime} />
+            <Setting open={open} setOpen={setOpen} formData={formData} setFormData={setFormData} time ={time} setTime={setTime} setFixtime={setFixtime} />
           </div>
         </div>
         {/* Task List Section */}
@@ -236,8 +214,5 @@ const Home = () => {
     </div>
   );
 };  
-<<<<<<< HEAD
-=======
 
->>>>>>> a8609ff86e74064aa8b59c3fac8d3eb811893cc5
 export default Home;
