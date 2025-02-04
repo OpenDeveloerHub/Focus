@@ -6,12 +6,9 @@ function Task() {
     { 
       id: 1, name: "Sample Task", completed: false, note: "This is a sample note."
      },
-     { 
-      id: 2, name: "Sample Task", completed: false, note: "This is a sample note."
-     },
-     { 
-      id: 3, name: "Sample Task", completed: false, note: "This is a sample note."
-     },
+    
+     { id: Date.now() + 1, name: "Focused Study Session", note: "Spend 60 minutes studying, away from distractions.", completed: false },
+     { id: Date.now() + 2, name: "Exercise", note: "Take a 30-minute walk or workout session to stay active.", completed: false }
   ]);
   const [taskName, setTaskName] = useState("");
   const [taskNote, setTaskNote] = useState("");
@@ -34,7 +31,9 @@ function Task() {
 
   const addTask = () => {
     if (taskName.trim() === "") return;
-
+  
+    const newTask = { id: tasks.length + 1, name: taskName, completed: false, note: taskNote };
+  
     if (editTaskId) {
       setTasks((prevTasks) =>
         prevTasks.map((task) =>
@@ -42,17 +41,15 @@ function Task() {
         )
       );
     } else {
-      setTasks([
-        ...tasks,
-        { id: tasks.length + 1, name: taskName, completed: false, note: taskNote },
-      ]);
+      setTasks([newTask, ...tasks]); // Add new task at the top
     }
-
+  
     setTaskName("");
     setTaskNote("");
     setEditTaskId(null);
     setIsDrawerOpen(false);
   };
+  
 
   return (
     <div className="ml-4 flex flex-col items-center w-135 h-full  py-0">

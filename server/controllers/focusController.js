@@ -3,6 +3,7 @@ const DailyFocus = require('../models/DailyFocus');
 const FocusSegment = require('../models/FocusSegment');
 
 exports.addFocusSession = async (req, res) => {
+    console.log("fersfer");
     try {
         const { userId, startTime, endTime, projectName } = req.body;
         const duration = (new Date(endTime) - new Date(startTime)) / 60000;
@@ -28,6 +29,7 @@ exports.addFocusSession = async (req, res) => {
 
         res.status(201).json({ message: 'Focus session added successfully', dailyFocus });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: error.message });
     }
 };
