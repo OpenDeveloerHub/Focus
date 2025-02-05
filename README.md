@@ -29,7 +29,7 @@ _Click on the image to watch the video!_
 
 | Dashboard | Task Manager | Analytics |
 |-----------|-------------|-----------|
-| ![Dashboard](https://via.placeholder.com/300) | ![Task Manager](https://via.placeholder.com/300) | ![Analytics](https://via.placeholder.com/300) |
+| ![Dashboard](https://drive.google.com/file/d/16Dh_MHbDcfjpztPi59Y_QcNiEKueTQiw/view?usp=sharing) | ![Task Manager](https://drive.google.com/file/d/1VDyQa1R9w2nUGJjvGeEjL_ph7q4T4FWN/view?usp=sharing) | ![Analytics](https://via.placeholder.com/300) |
 
 ---
 
