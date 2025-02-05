@@ -6,8 +6,6 @@ function Task() {
     { 
       id: 1, name: "Sample Task", completed: false, note: "This is a sample note."
      },
-
-
      { id: Date.now() + 1, name: "Focused Study Session", note: "Spend 60 minutes studying, away from distractions.", completed: false },
      { id: Date.now() + 2, name: "Exercise", note: "Take a 30-minute walk or workout session to stay active.", completed: false }
 
