@@ -7,12 +7,16 @@ import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer.jsx";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
+import { Analytics } from '@vercel/analytics/react';
+
 
 const App = () => {
   return (
     <div>
       
       <BrowserRouter>
+      <Analytics />
+
         <NavBar />
         <Routes>
           <Route path="/*" element={<Home />} />
