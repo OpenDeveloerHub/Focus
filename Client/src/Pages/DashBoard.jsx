@@ -6,7 +6,7 @@ function DashBoard() {
   const [auth] = useAuth(); // Access the auth data
 
   const handleButtonClick = () => {
-    console.log(auth); // Log the auth data to the console
+    console.log(auth); 
   };
 
   return (
