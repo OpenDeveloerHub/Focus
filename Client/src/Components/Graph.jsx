@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Bar, Line } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 
 // Registering chart elements
@@ -9,7 +9,7 @@ const Graph = () => {
   const [filter, setFilter] = useState("weekly"); // Default filter to weekly
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [filteredStudyData, setFilteredStudyData] = useState([]);
-  
+
   // Dummy Data for testing
   const taskData = [
     { date: "2025-02-01", timeSpent: 3 },
@@ -92,7 +92,7 @@ const Graph = () => {
       },
       {
         label: "Growth Percentage",
-        data: filteredStudyData.length > 1 
+        data: filteredStudyData.length > 1
           ? filteredStudyData.slice(1).map((_, idx) => calculateGrowthPercentage(filteredStudyData.slice(0, idx + 2)))
           : [0],
         fill: false,
@@ -125,25 +125,25 @@ const Graph = () => {
 
   return (
     <div className="p-6 bg-gradient-to-br from-white via-gray-100 to-gray-200 text-gray-900 shadow-lg">
-      <h2 className="text-2xl font-semibold mb-4">User Task and Study Graphs</h2>
-      
+      <h2 className="text-2xl font-semibold mb-4 text-center md:text-left">User Task and Study Graphs</h2>
+
       {/* Filter buttons */}
-      <div className="flex gap-4 mb-6">
+      <div className="flex justify-center gap-4 mb-6 md:justify-start">
         <button onClick={() => setFilter("weekly")} className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition duration-300">Weekly</button>
         <button onClick={() => setFilter("monthly")} className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition duration-300">Monthly</button>
         <button onClick={() => setFilter("yearly")} className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition duration-300">Yearly</button>
       </div>
 
       {/* Flexbox layout for dividing charts into two boxes */}
-      <div className="flex gap-6">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {/* Task Completion Chart */}
-        <div className="flex-1 bg-white p-4 rounded-lg shadow-md">
+        <div className="bg-white p-4 rounded-lg shadow-md">
           <h3 className="text-xl mb-4">Tasks Completion (Hours)</h3>
           <Line data={taskChartData} options={options} height={250} />
         </div>
 
         {/* Study Time and Growth Percentage Chart */}
-        <div className="flex-1 bg-white p-4 rounded-lg shadow-md">
+        <div className="bg-white p-4 rounded-lg shadow-md">
           <h3 className="text-xl mb-4">Study Time & Growth Percentage</h3>
           <Line data={studyChartData} options={options} height={250} />
         </div>
