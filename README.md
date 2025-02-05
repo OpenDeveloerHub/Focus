@@ -29,7 +29,7 @@ _Click on the image to watch the video!_
 
 | Dashboard | Task Manager | Analytics |
 |-----------|-------------|-----------|
-| ![Dashboard](https://drive.google.com/file/d/16Dh_MHbDcfjpztPi59Y_QcNiEKueTQiw/view?usp=sharing) | ![Task Manager](https://drive.google.com/file/d/1VDyQa1R9w2nUGJjvGeEjL_ph7q4T4FWN/view?usp=sharing) | ![Analytics](https://via.placeholder.com/300) |
+| ![Dashboard](https://firebasestorage.googleapis.com/v0/b/mini-project-0.appspot.com/o/051.jpg?alt=media&token=a59299f6-0998-404f-84cf-03e0466ba89c) | ![Task Manager](https://firebasestorage.googleapis.com/v0/b/mini-project-0.appspot.com/o/52.jpg?alt=media&token=f7714a93-9bee-437d-a2e6-d7d605a0a8ac) | ![Analytics](https://firebasestorage.googleapis.com/v0/b/mini-project-0.appspot.com/o/053.jpg?alt=media&token=bd56c10b-06a4-4ed1-a17a-249f5c413f11) |
 
 ---
 
