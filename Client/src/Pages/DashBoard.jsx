@@ -10,7 +10,7 @@ function DashBoard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-[#522D9] p-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-[#522D9] ">
       {/* Dashboard Header */}
       <div className="mb-6 text-center">
         <h1 className="mt-8 text-4xl font-bold text-gray-900">Welcome to Your Dashboard</h1>
